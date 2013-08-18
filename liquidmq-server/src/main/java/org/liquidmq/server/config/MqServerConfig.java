@@ -26,7 +26,7 @@ public class MqServerConfig implements Converter {
 		
 		MqServer mq = (MqServer) source;
 		ms.writeObject(Integer.class, "port", mq.getPort());
-		ms.writeObject(CredentialVerifier.class, "credentialVerifier", mq.getCredentialVerifier());
+		ms.writeObject(CredentialVerifier.class, "credential-verifier", mq.getCredentialVerifier());
 	}
 
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
@@ -37,7 +37,7 @@ public class MqServerConfig implements Converter {
 			reader.moveDown();
 			if("port".equals(reader.getNodeName()))
 				ms.setPort(us.readObject(Integer.class));
-			if("credentialVerifier".equals(reader.getNodeName()))
+			if("credential-verifier".equals(reader.getNodeName()))
 				ms.setCredentialVerifier(us.readObject(CredentialVerifier.class));
 			reader.moveUp();
 		}

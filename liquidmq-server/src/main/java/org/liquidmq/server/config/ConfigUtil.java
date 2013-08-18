@@ -2,6 +2,9 @@ package org.liquidmq.server.config;
 
 import java.lang.reflect.Modifier;
 
+import org.liquidmq.MqServer;
+import org.liquidmq.cv.StoredPasswords;
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -9,6 +12,14 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 public class ConfigUtil {
+	public static void registerConverters(XStream x) {
+		x.registerConverter(new MqServerConfig(x));
+		x.registerConverter(new StoredPasdswordsConfig(x));
+		
+		x.alias("mq-server", MqServer.class);
+		x.alias("stored-passwords", StoredPasswords.class);
+	}
+	
 	protected XStream xstream;
 	
 	public ConfigUtil(XStream xstream) {
@@ -29,7 +40,7 @@ public class ConfigUtil {
 				return;
 			writer.startNode(name);
 			if(!Modifier.isFinal(clazz.getModifiers()))
-				writer.startNode(xstream.getMapper().serializedClass(clazz));
+				writer.startNode(xstream.getMapper().serializedClass(value.getClass()));
 			context.convertAnother(value);
 			if(!Modifier.isFinal(clazz.getModifiers()))
 				writer.endNode();
