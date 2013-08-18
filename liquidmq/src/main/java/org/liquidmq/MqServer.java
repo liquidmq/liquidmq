@@ -287,14 +287,14 @@ public class MqServer extends Listener {
 				}
 				break;
 			case SET_QUEUE: // start queueing for a topic
-				if(permitted(new Permission(PermissionType.QUEUE), connection)) { // check perms
+				if(permitted(new Permission(PermissionType.QUEUE, c.topic()), connection)) { // check perms
 					log.trace("{} setting queue {}", this, c.topic());
 					if(!queues.containsKey(c.topic()))
 						queues.put(c.topic(), new MessageQueue());
 				}
 				break;
 			case UNSET_QUEUE: // stop queueing a topic
-				if(permitted(new Permission(PermissionType.QUEUE), connection)) { // check perms
+				if(permitted(new Permission(PermissionType.QUEUE, c.topic()), connection)) { // check perms
 					log.trace("{} unsetting queue {}", this, c.topic());
 					queues.remove(c.topic());
 				}
