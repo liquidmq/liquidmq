@@ -67,6 +67,10 @@ public class MqServer extends Listener {
 	 */
 	protected Registry<Permission, Connection> permissions = new Registry<Permission, Connection>();
 	
+	public MqServer() {
+		this(-1);
+	}
+	
 	/**
 	 * Create a new LiquidMQ server that listens on both TCP and UDP on the argument port.
 	 * Does not actually start the server or bind to sockets yet.
@@ -83,6 +87,18 @@ public class MqServer extends Listener {
 	 */
 	public int getPort() {
 		return port;
+	}
+	
+	public void setPort(int port) {
+		this.port = port;
+	}
+	
+	public CredentialVerifier getCredentialVerifier() {
+		return credentialVerifier;
+	}
+	
+	public void setCredentialVerifier(CredentialVerifier credentialVerifier) {
+		this.credentialVerifier = credentialVerifier;
 	}
 	
 	/**
