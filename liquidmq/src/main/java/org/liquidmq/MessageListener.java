@@ -1,7 +1,7 @@
 package org.liquidmq;
 
 /**
- * A listener for data messages sent over KryoMQ
+ * A listener for data messages sent over LiquidMQ
  * @author robin
  *
  */

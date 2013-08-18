@@ -8,8 +8,8 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
 /**
- * Base class for transport messages transported across KryoMQ.
- * Messages are treated agnostically; KryoMQ sees them only as byte arrays,
+ * Base class for transport messages transported across LiquidMQ.
+ * Messages are treated agnostically; LiquidMQ sees them only as byte arrays,
  * leaving higher-level serialization or deserialization to the user.
  * @author robin
  *

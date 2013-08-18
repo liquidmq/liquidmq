@@ -6,13 +6,13 @@ import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
 /**
- * A statement about the KryoMQ system made by an {@link MqServer} to an {@link MqClient}
+ * A statement about the LiquidMQ system made by an {@link MqServer} to an {@link MqClient}
  * @author robin
  *
  */
 public class Meta implements KryoSerializable {
 	/**
-	 * Types of KryoMQ metadata
+	 * Types of LiquidMQ metadata
 	 * @author robin
 	 *
 	 */

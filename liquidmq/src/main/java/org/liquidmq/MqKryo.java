@@ -3,7 +3,7 @@ package org.liquidmq;
 import com.esotericsoftware.kryo.Kryo;
 
 /**
- * {@link Kryo} preconfigured for use with KryoMQ message transport
+ * {@link Kryo} preconfigured for use with LiquidMQ message transport
  * @author robin
  *
  */

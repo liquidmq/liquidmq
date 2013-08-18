@@ -16,7 +16,7 @@ import com.esotericsoftware.kryonet.Listener;
 import org.liquidmq.Control.Command;
 
 /**
- * A KryoMQ client
+ * A LiquidMQ client
  * @author robin
  *
  */

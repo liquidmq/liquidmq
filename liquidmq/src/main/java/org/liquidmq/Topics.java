@@ -1,7 +1,7 @@
 package org.liquidmq;
 
 /**
- * Topic string prefixes that have special meaning for KryoMQ
+ * Topic string prefixes that have special meaning for LiquidMQ
  * @author robin
  *
  */

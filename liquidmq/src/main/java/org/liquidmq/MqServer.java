@@ -19,7 +19,7 @@ import org.liquidmq.Meta.MetaType;
 import org.liquidmq.Permission.PermissionType;
 
 /**
- * A KryoMQ server
+ * A LiquidMQ server
  * @author robin
  *
  */
@@ -58,7 +58,7 @@ public class MqServer extends Listener {
 	protected Registry<Permission, Connection> permissions = new Registry<Permission, Connection>();
 	
 	/**
-	 * Create a new KryoMQ server that listens on both TCP and UDP on the argument port.
+	 * Create a new LiquidMQ server that listens on both TCP and UDP on the argument port.
 	 * Does not actually start the server or bind to sockets yet.
 	 * @param port The port to use
 	 */
@@ -68,7 +68,7 @@ public class MqServer extends Listener {
 	}
 	
 	/**
-	 * Return the port for this KryoMQ server
+	 * Return the port for this LiquidMQ server
 	 * @return
 	 */
 	public int getPort() {
