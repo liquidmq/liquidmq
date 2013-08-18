@@ -2,6 +2,7 @@ package org.liquidmq.server.config;
 
 import org.liquidmq.CredentialVerifier;
 import org.liquidmq.MqServer;
+import org.liquidmq.PermissionVerifier;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
@@ -27,6 +28,7 @@ public class MqServerConfig implements Converter {
 		MqServer mq = (MqServer) source;
 		ms.writeObject(Integer.class, "port", mq.getPort());
 		ms.writeObject(CredentialVerifier.class, "credential-verifier", mq.getCredentialVerifier());
+		ms.writeObject(PermissionVerifier.class, "permission-verifier", mq.getPermissionVerifier());
 	}
 
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
@@ -39,6 +41,8 @@ public class MqServerConfig implements Converter {
 				ms.setPort(us.readObject(Integer.class));
 			if("credential-verifier".equals(reader.getNodeName()))
 				ms.setCredentialVerifier(us.readObject(CredentialVerifier.class));
+			if("permission-verifier".equals(reader.getNodeName()))
+				ms.setPermissionVerifier(us.readObject(PermissionVerifier.class));
 			reader.moveUp();
 		}
 		

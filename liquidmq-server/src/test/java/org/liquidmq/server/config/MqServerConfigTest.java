@@ -3,7 +3,9 @@ package org.liquidmq.server.config;
 import org.junit.Assert;
 import org.junit.Test;
 import org.liquidmq.MqServer;
+import org.liquidmq.PermissionVerifier;
 import org.liquidmq.cv.StoredPasswords;
+import org.liquidmq.pv.EveryonePermitted;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -14,10 +16,14 @@ public class MqServerConfigTest {
 		ConfigUtil.registerConverters(x);
 		
 		MqServer s = new MqServer();
+		
 		StoredPasswords sp = new StoredPasswords();
+		sp.put("foo-user", "bar-pass");
 		s.setCredentialVerifier(sp);
 		
-		sp.put("foo-user", "bar-pass");
+		PermissionVerifier pv = new EveryonePermitted();
+		s.setPermissionVerifier(pv);
+		
 		
 		x.toXML(s, System.out);
 	}

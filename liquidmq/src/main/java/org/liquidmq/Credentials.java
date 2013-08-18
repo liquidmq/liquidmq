@@ -41,6 +41,10 @@ public abstract class Credentials implements KryoSerializable {
 		private String password;
 		
 		public PasswordCredentials() {}
+		
+		public PasswordCredentials(String username) {
+			this.username = username;
+		}
 
 		public String getUsername() {
 			return username;

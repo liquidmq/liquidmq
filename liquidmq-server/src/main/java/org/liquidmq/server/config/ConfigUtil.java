@@ -23,6 +23,7 @@ public class ConfigUtil {
 		x.registerConverter(new CredentialsConfig.PasswordCredentialsConfig(x));
 		x.registerConverter(new EveryonePermittedConfig());
 		x.registerConverter(new PermissionRegistryConfig(x));
+		x.registerConverter(new PermissionConfig());
 		
 		x.alias("mq-server", MqServer.class);
 		x.alias("stored-passwords", StoredPasswords.class);

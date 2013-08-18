@@ -57,7 +57,6 @@ public final class Permission implements KryoSerializable {
 	/**
 	 * required for deserialization
 	 */
-	@Deprecated
 	public Permission() {}
 	
 	/**
@@ -118,5 +117,13 @@ public final class Permission implements KryoSerializable {
 	
 	public String topic() {
 		return topic;
+	}
+	
+	public void setType(PermissionType type) {
+		this.type = type;
+	}
+	
+	public void setTopic(String topic) {
+		this.topic = topic;
 	}
 }
