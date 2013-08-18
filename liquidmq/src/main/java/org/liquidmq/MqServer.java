@@ -117,7 +117,7 @@ public class MqServer extends Listener {
 	 * @throws IOException
 	 */
 	public MqServer start() throws IOException {
-		log.debug("{} starting server on port {}", this, port);
+		log.info("{} starting server on port {}", this, port);
 		server = new Server(1024*256, 1024*256, new KryoSerialization(new MqKryo()));
 		server.start();
 		server.bind(port, port);
