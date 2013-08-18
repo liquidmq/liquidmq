@@ -62,6 +62,8 @@ public class MqServer extends Listener {
 	 * Registry for which {@link Connection}s subscribe to each topic
 	 */
 	protected Registry<String, Connection> subscriptions = new Registry<String, Connection>();
+	
+	protected PermissionVerifier permissionVerifier;
 	/**
 	 * Registry for which {@link Connection}s have each permission
 	 */
@@ -101,6 +103,14 @@ public class MqServer extends Listener {
 		this.credentialVerifier = credentialVerifier;
 	}
 	
+	public PermissionVerifier getPermissionVerifier() {
+		return permissionVerifier;
+	}
+
+	public void setPermissionVerifier(PermissionVerifier permissionVerifier) {
+		this.permissionVerifier = permissionVerifier;
+	}
+
 	/**
 	 * Start this {@link MqServer}.  This means starting a KryoNet {@link Server}
 	 * and binding it to the appropriate port
@@ -197,7 +207,9 @@ public class MqServer extends Listener {
 	 * @return
 	 */
 	protected boolean permitted(Permission perm, Connection connection) {
-		if(connection.getRemoteAddressTCP().getAddress().isLoopbackAddress())
+		if(permissionVerifier == null)
+			return true;
+		if(permissionVerifier.verify(this, connection, credentials.get(connection), perm))
 			return true;
 		return permissions.get(perm).contains(connection);
 	}

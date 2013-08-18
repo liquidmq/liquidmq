@@ -24,6 +24,16 @@ public abstract class Credentials implements KryoSerializable {
 		@Override
 		public void read(Kryo kryo, Input input) {
 		}
+		
+		@Override
+		public int hashCode() {
+			return 0;
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			return (obj instanceof NoCredentials);
+		}
 	}
 	
 	public static class PasswordCredentials extends Credentials {
@@ -58,6 +68,20 @@ public abstract class Credentials implements KryoSerializable {
 		public void read(Kryo kryo, Input input) {
 			username = input.readString();
 			password = input.readString();
+		}
+		
+		@Override
+		public int hashCode() {
+			return username == null ? 0 : username.hashCode();
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if(obj instanceof PasswordCredentials) {
+				PasswordCredentials o = (PasswordCredentials) obj;
+				return username == null ? o.username == null : username.equals(o.username);
+			}
+			return false;
 		}
 	}
 }

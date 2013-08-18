@@ -57,6 +57,10 @@ public class Registry<K, T> {
 		return registry.containsKey(topic) && get(topic).size() > 0;
 	}
 	
+	public Set<K> keys() {
+		return Collections.unmodifiableSet(registry.keySet());
+	}
+	
 	/**
 	 * Returns all the subscribers for the argument topic.  The returned {@link Set}
 	 * is unmodifiable.

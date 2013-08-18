@@ -4,7 +4,10 @@ import java.lang.reflect.Modifier;
 
 import org.liquidmq.Credentials;
 import org.liquidmq.MqServer;
+import org.liquidmq.Permission;
 import org.liquidmq.cv.StoredPasswords;
+import org.liquidmq.pv.EveryonePermitted;
+import org.liquidmq.pv.PermissionRegistry;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -18,11 +21,16 @@ public class ConfigUtil {
 		x.registerConverter(new StoredPasswordsConfig(x));
 		x.registerConverter(new CredentialsConfig.NoCredentialsConfig(x));
 		x.registerConverter(new CredentialsConfig.PasswordCredentialsConfig(x));
+		x.registerConverter(new EveryonePermittedConfig());
+		x.registerConverter(new PermissionRegistryConfig(x));
 		
 		x.alias("mq-server", MqServer.class);
 		x.alias("stored-passwords", StoredPasswords.class);
 		x.alias("anonymous", Credentials.NoCredentials.class);
 		x.alias("user", Credentials.PasswordCredentials.class);
+		x.alias("everyone-permitted", EveryonePermitted.class);
+		x.alias("permission-registry", PermissionRegistry.class);
+		x.alias("permission", Permission.class);
 	}
 	
 	protected XStream xstream;

@@ -12,7 +12,7 @@ import com.esotericsoftware.kryo.io.Output;
  * @author robin
  *
  */
-public class Permission implements KryoSerializable {
+public final class Permission implements KryoSerializable {
 	/**
 	 * Types of permissions which can be granted
 	 * @author robin
