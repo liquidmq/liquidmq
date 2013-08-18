@@ -2,6 +2,7 @@ package org.liquidmq.server.config;
 
 import java.lang.reflect.Modifier;
 
+import org.liquidmq.Credentials;
 import org.liquidmq.MqServer;
 import org.liquidmq.cv.StoredPasswords;
 
@@ -15,9 +16,13 @@ public class ConfigUtil {
 	public static void registerConverters(XStream x) {
 		x.registerConverter(new MqServerConfig(x));
 		x.registerConverter(new StoredPasswordsConfig(x));
+		x.registerConverter(new CredentialsConfig.NoCredentialsConfig(x));
+		x.registerConverter(new CredentialsConfig.PasswordCredentialsConfig(x));
 		
 		x.alias("mq-server", MqServer.class);
 		x.alias("stored-passwords", StoredPasswords.class);
+		x.alias("anonymous", Credentials.NoCredentials.class);
+		x.alias("user", Credentials.PasswordCredentials.class);
 	}
 	
 	protected XStream xstream;
