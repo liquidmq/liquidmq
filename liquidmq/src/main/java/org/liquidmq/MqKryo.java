@@ -24,5 +24,8 @@ public class MqKryo extends Kryo {
 		
 		register(Permission.class);
 		register(Permission.PermissionType.class);
+		
+		register(Credentials.NoCredentials.class);
+		register(Credentials.PasswordCredentials.class);
 	}
 }

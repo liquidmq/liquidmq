@@ -32,6 +32,10 @@ public class MqClient extends Listener {
 	 */
 	protected int port;
 	/**
+	 * Credentials for this client
+	 */
+	protected Credentials credentials = new Credentials.NoCredentials();
+	/**
 	 * The KryoNet {@link Client} for this {@link MqClient}
 	 */
 	protected Client client;
@@ -108,6 +112,7 @@ public class MqClient extends Listener {
 		client.start();
 		client.connect(10000, host, port, port);
 		client.addListener(this);
+		client.sendTCP(credentials);
 		log.debug("{} connected and registered", this);
 		return this;
 	}
@@ -449,5 +454,15 @@ public class MqClient extends Listener {
 		public void messageReceived(Message message) {
 			queue.put(message);
 		}
+	}
+
+	public Credentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(Credentials credentials) {
+		if(credentials == null)
+			throw new NullPointerException();
+		this.credentials = credentials;
 	}
 }

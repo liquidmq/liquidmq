@@ -47,6 +47,16 @@ public class MqServer extends Listener {
 	 * Mapping from topic to {@link MessageQueue} for topics which have queueing enabled
 	 */
 	protected Map<String, MessageQueue> queues = new ConcurrentHashMap<String, MessageQueue>();
+
+	/**
+	 * Delegate that verifies client credentials
+	 */
+	protected CredentialVerifier credentialVerifier;
+	
+	/**
+	 * Credentials provided by the clients
+	 */
+	protected Map<Connection, Credentials> credentials = new ConcurrentHashMap<Connection, Credentials>();
 	
 	/**
 	 * Registry for which {@link Connection}s subscribe to each topic
@@ -244,6 +254,11 @@ public class MqServer extends Listener {
 	 */
 	@Override
 	public void received(Connection connection, Object object) {
+		if(object instanceof Credentials) {
+			Credentials cr = (Credentials) object;
+			cr.setVerified(credentialVerifier == null || credentialVerifier.verify(this, connection, cr));
+			credentials.put(connection, cr);
+		}
 		if(object instanceof Message) {
 			// A user-level message
 			Message m = (Message) object;
