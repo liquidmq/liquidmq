@@ -9,10 +9,10 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
-public class StoredPasdswordsConfig implements Converter {
+public class StoredPasswordsConfig implements Converter {
 	protected ConfigUtil util;
 	
-	public StoredPasdswordsConfig(XStream xstream) {
+	public StoredPasswordsConfig(XStream xstream) {
 		util = new ConfigUtil(xstream);
 	}
 

@@ -14,7 +14,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 public class ConfigUtil {
 	public static void registerConverters(XStream x) {
 		x.registerConverter(new MqServerConfig(x));
-		x.registerConverter(new StoredPasdswordsConfig(x));
+		x.registerConverter(new StoredPasswordsConfig(x));
 		
 		x.alias("mq-server", MqServer.class);
 		x.alias("stored-passwords", StoredPasswords.class);
