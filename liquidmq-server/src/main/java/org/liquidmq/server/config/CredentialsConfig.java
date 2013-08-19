@@ -9,11 +9,9 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
-public abstract class CredentialsConfig implements Converter {
-	protected ConfigUtil util;
-	
+public abstract class CredentialsConfig extends AbstractConfig {
 	public CredentialsConfig(XStream x) {
-		util = new ConfigUtil(x);
+		super(x);
 	}
 	
 	public static class NoCredentialsConfig extends CredentialsConfig {
@@ -21,10 +19,10 @@ public abstract class CredentialsConfig implements Converter {
 			super(x);
 		}
 
-		public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+		public void marshalImpl(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
 		}
 
-		public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+		public Object unmarshalImpl(HierarchicalStreamReader reader, UnmarshallingContext context) {
 			return new Credentials.NoCredentials();
 		}
 
@@ -38,12 +36,12 @@ public abstract class CredentialsConfig implements Converter {
 			super(x);
 		}
 
-		public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+		public void marshalImpl(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
 			Credentials.PasswordCredentials pc = (Credentials.PasswordCredentials) source;
 			context.convertAnother(pc.getUsername());
 		}
 
-		public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+		public Object unmarshalImpl(HierarchicalStreamReader reader, UnmarshallingContext context) {
 			Credentials.PasswordCredentials pc = new Credentials.PasswordCredentials();
 			pc.setUsername((String) context.convertAnother(pc, String.class));
 			return pc;

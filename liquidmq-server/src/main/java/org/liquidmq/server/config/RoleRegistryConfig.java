@@ -10,24 +10,22 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
-public class RoleRegistryConfig implements Converter {
+public class RoleRegistryConfig extends AbstractConfig {
 
-	protected ConfigUtil util;
-	
 	public RoleRegistryConfig(XStream x) {
-		util = new ConfigUtil(x);
+		super(x);
 	}
 	
 	public boolean canConvert(Class type) {
 		return RoleRegistry.class.isAssignableFrom(type);
 	}
 
-	public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+	public void marshalImpl(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
 		RoleRegistry rr = (RoleRegistry) source;
-		ConfigUtil.MarshalSupport ms = util.new MarshalSupport(writer, context);
+		MarshalSupport ms = marshalSupport(writer, context);
 		
 		for(Credentials c : rr.keys()) {
-			writer.startNode("permissions");
+			writer.startNode("user");
 			ms.writeObject(Credentials.class, "credential", c);
 			for(RoleRegistry.Role r : rr.get(c)) {
 				ms.writeObject(RoleRegistry.Role.class, "role", r);
@@ -36,12 +34,12 @@ public class RoleRegistryConfig implements Converter {
 		}
 	}
 
-	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+	public Object unmarshalImpl(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		RoleRegistry rr = new RoleRegistry();
-		ConfigUtil.UnmarshalSupport us = util.new UnmarshalSupport(rr, reader, context);
+		UnmarshalSupport us = unmarshalSupport(rr, reader, context);
 		while(reader.hasMoreChildren()) {
 			reader.moveDown();
-			if("permissions".equals(reader.getNodeName())) {
+			if("user".equals(reader.getNodeName())) {
 				Credentials c = null;
 				while(reader.hasMoreChildren()) {
 					reader.moveDown();

@@ -9,29 +9,27 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
-public class StoredPasswordsConfig implements Converter {
-	protected ConfigUtil util;
-	
+public class StoredPasswordsConfig extends AbstractConfig {
 	public StoredPasswordsConfig(XStream xstream) {
-		util = new ConfigUtil(xstream);
+		super(xstream);
 	}
 
 	public boolean canConvert(Class type) {
 		return StoredPasswords.class.isAssignableFrom(type);
 	}
 
-	public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+	public void marshalImpl(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
 		StoredPasswords sp = (StoredPasswords) source;
-		ConfigUtil.MarshalSupport ms = util.new MarshalSupport(writer, context);
+		MarshalSupport ms = marshalSupport(writer, context);
 		
 		for(String user : sp.keySet()) {
 			ms.writeObject(String.class, user, sp.get(user));
 		}
 	}
 
-	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+	public Object unmarshalImpl(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		StoredPasswords sp = new StoredPasswords();
-		ConfigUtil.UnmarshalSupport us = util.new UnmarshalSupport(sp, reader, context);
+		UnmarshalSupport us = unmarshalSupport(sp, reader, context);
 		
 		while(reader.hasMoreChildren()) {
 			reader.moveDown();
