@@ -2,10 +2,16 @@ package org.liquidmq.server.config;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.liquidmq.Credentials;
 import org.liquidmq.MqServer;
+import org.liquidmq.Permission;
 import org.liquidmq.PermissionVerifier;
+import org.liquidmq.Permission.PermissionType;
 import org.liquidmq.cv.StoredPasswords;
 import org.liquidmq.pv.EveryonePermitted;
+import org.liquidmq.pv.MultiplePermissions;
+import org.liquidmq.pv.PermissionRegistry;
+import org.liquidmq.pv.RoleRegistry;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -18,12 +24,20 @@ public class MqServerConfigTest {
 		MqServer s = new MqServer();
 		
 		StoredPasswords sp = new StoredPasswords();
-		sp.put("foo-user", "bar-pass");
 		s.setCredentialVerifier(sp);
+		sp.put("foo-user", "bar-pass");
 		
-		PermissionVerifier pv = new EveryonePermitted();
-		s.setPermissionVerifier(pv);
+		MultiplePermissions mp = new MultiplePermissions();
+		s.setPermissionVerifier(mp);
 		
+		RoleRegistry rr = new RoleRegistry();
+		rr.add(new Credentials.PasswordCredentials("foo-user"), RoleRegistry.Role.ADMIN);
+		rr.add(new Credentials.NoCredentials(), RoleRegistry.Role.GUEST);
+		mp.add(rr);
+		
+		PermissionRegistry pr = new PermissionRegistry();
+		pr.add(new Credentials.PasswordCredentials("bar-user"), new Permission(PermissionType.SEND, ""));
+		mp.add(pr);
 		
 		x.toXML(s, System.out);
 	}
