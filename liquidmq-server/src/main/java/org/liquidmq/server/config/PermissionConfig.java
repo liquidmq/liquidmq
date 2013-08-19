@@ -19,7 +19,7 @@ public class PermissionConfig implements Converter {
 		Permission p = (Permission) source;
 		
 		writer.addAttribute("type", p.type().name());
-		if(p.topic() != null && !p.topic().isEmpty())
+		if(p.topic() != null)
 			writer.setValue(p.topic());
 	}
 

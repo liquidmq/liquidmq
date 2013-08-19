@@ -36,7 +36,7 @@ public class MqServerConfigTest {
 		mp.add(rr);
 		
 		PermissionRegistry pr = new PermissionRegistry();
-		pr.add(new Credentials.PasswordCredentials("bar-user"), new Permission(PermissionType.SEND, ""));
+		pr.add(new Credentials.PasswordCredentials("bar-user"), new Permission(PermissionType.SEND, "qux-topic"));
 		mp.add(pr);
 		
 		x.toXML(s, System.out);
