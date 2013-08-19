@@ -14,8 +14,8 @@ public class PermissionRegistryConfigTest {
 	public void testWrite() throws Exception {
 		PermissionRegistry pr = new PermissionRegistry();
 		pr.add(new Credentials.NoCredentials(), new Permission(PermissionType.SET_ORIGIN));
-		pr.add(new Credentials.PasswordCredentials("foo"), new Permission(PermissionType.SUBSCRIBE, "foo-topic"));
-		pr.add(new Credentials.PasswordCredentials("foo"), new Permission(PermissionType.SUBSCRIBE, "bar-topic"));
+		pr.add(new Credentials.UsernameCredentials("foo"), new Permission(PermissionType.SUBSCRIBE, "foo-topic"));
+		pr.add(new Credentials.UsernameCredentials("foo"), new Permission(PermissionType.SUBSCRIBE, "bar-topic"));
 		
 		XStream x = new XStream();
 		ConfigUtil.registerConverters(x);

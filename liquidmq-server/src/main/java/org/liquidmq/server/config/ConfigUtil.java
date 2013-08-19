@@ -25,6 +25,7 @@ public class ConfigUtil {
 		x.registerConverter(new MqServerConfig(x));
 		x.registerConverter(new StoredPasswordsConfig(x));
 		x.registerConverter(new CredentialsConfig.NoCredentialsConfig(x));
+		x.registerConverter(new CredentialsConfig.UsernameCredentialsConfig(x));
 		x.registerConverter(new CredentialsConfig.PasswordCredentialsConfig(x));
 		x.registerConverter(new EveryonePermittedConfig());
 		x.registerConverter(new PermissionRegistryConfig(x));
@@ -35,7 +36,8 @@ public class ConfigUtil {
 		x.alias("mq-server", MqServer.class);
 		x.alias("stored-passwords", StoredPasswords.class);
 		x.alias("anonymous", Credentials.NoCredentials.class);
-		x.alias("username", Credentials.PasswordCredentials.class);
+		x.alias("username", Credentials.UsernameCredentials.class);
+		x.alias("authenticated", Credentials.PasswordCredentials.class);
 	}
 	
 	private ConfigUtil() {}

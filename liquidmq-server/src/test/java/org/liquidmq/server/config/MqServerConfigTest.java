@@ -31,12 +31,12 @@ public class MqServerConfigTest {
 		s.setPermissionVerifier(mp);
 		
 		RoleRegistry rr = new RoleRegistry();
-		rr.add(new Credentials.PasswordCredentials("foo-user"), RoleRegistry.Role.ADMIN);
+		rr.add(new Credentials.UsernameCredentials("foo-user"), RoleRegistry.Role.ADMIN);
 		rr.add(new Credentials.NoCredentials(), RoleRegistry.Role.GUEST);
 		mp.add(rr);
 		
 		PermissionRegistry pr = new PermissionRegistry();
-		pr.add(new Credentials.PasswordCredentials("bar-user"), new Permission(PermissionType.SEND, "qux-topic"));
+		pr.add(new Credentials.UsernameCredentials("bar-user"), new Permission(PermissionType.SEND, "qux-topic"));
 		mp.add(pr);
 		
 		x.toXML(s, System.out);

@@ -14,6 +14,30 @@ public abstract class CredentialsConfig extends AbstractConfig {
 		super(x);
 	}
 	
+	public static class UsernameCredentialsConfig extends CredentialsConfig {
+		public UsernameCredentialsConfig(XStream x) {
+			super(x);
+		}
+
+		public boolean canConvert(Class type) {
+			return Credentials.UsernameCredentials.class.isAssignableFrom(type);
+		}
+		
+		@Override
+		protected void marshalImpl(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+			Credentials.UsernameCredentials c = (Credentials.UsernameCredentials) source;
+			context.convertAnother(c.getUsername());
+		}
+		
+		@Override
+		protected Object unmarshalImpl(HierarchicalStreamReader reader, UnmarshallingContext context) {
+			Credentials.UsernameCredentials c = new Credentials.UsernameCredentials();
+			c.setUsername((String) context.convertAnother(c, String.class));
+			return c;
+		}
+		
+	}
+	
 	public static class NoCredentialsConfig extends CredentialsConfig {
 		public NoCredentialsConfig(XStream x) {
 			super(x);
@@ -38,12 +62,24 @@ public abstract class CredentialsConfig extends AbstractConfig {
 
 		public void marshalImpl(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
 			Credentials.PasswordCredentials pc = (Credentials.PasswordCredentials) source;
-			context.convertAnother(pc.getUsername());
+			MarshalSupport ms = marshalSupport(writer, context);
+			ms.writeObject(String.class, "username", pc.getUsername());
+			ms.writeObject(String.class, "password", pc.getPassword());
 		}
 
 		public Object unmarshalImpl(HierarchicalStreamReader reader, UnmarshallingContext context) {
 			Credentials.PasswordCredentials pc = new Credentials.PasswordCredentials();
-			pc.setUsername((String) context.convertAnother(pc, String.class));
+			UnmarshalSupport us = unmarshalSupport(pc, reader, context);
+			
+			while(reader.hasMoreChildren()) {
+				reader.moveDown();
+				if("username".equals(reader.getNodeName()))
+					pc.setUsername(us.readObject(String.class));
+				if("password".equals(reader.getNodeName()))
+					pc.setPassword(us.readObject(String.class));
+				reader.moveUp();
+			}
+			
 			return pc;
 		}
 
